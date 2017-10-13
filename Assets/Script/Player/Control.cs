@@ -39,8 +39,8 @@ public class Control : MonoBehaviour {
 	public float AirJumpForce = 8;
 
 	//SmallStuff
-	public float _jumpBuffer = 0;
-	public float _jumpTime = 0;
+	float _jumpBuffer = 0;
+	float _jumpTime = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -76,27 +76,31 @@ public class Control : MonoBehaviour {
 		//MOVEMENT
 		if (_isGrounded) {
 			_rgbd.velocity = new Vector3(_player.GetAxis ("Horizontal") * GroundSpeed, _rgbd.velocity.y, 0);
+		}
+		else if (!_isGrounded) {
+			float newAirSpeed = _rgbd.velocity.x + _player.GetAxis ("Horizontal") * AirControl * Time.deltaTime;
+			if ((newAirSpeed > -GroundSpeed) && (newAirSpeed < GroundSpeed)) {
+				_rgbd.velocity = new Vector3(newAirSpeed, _rgbd.velocity.y, 0);
+			}
+		}
 
-			if ((_player.GetAxis ("Horizontal") <= -0.2f) || (_player.GetAxis ("Horizontal") >= 0.2f)) {
+		//TURN AROUND
+		if ((_player.GetAxis ("Horizontal") <= -0.2f) || (_player.GetAxis ("Horizontal") >= 0.2f)) {
 
-				if ((_player.GetAxis ("Horizontal") * (int)_direction) < 0) {
-					if (_direction == Direction.Left) {
-						_direction = Direction.Right;
-						_animator.SetBool("GoRight", true);
-					}
-					else {
-						_direction = Direction.Left;
-						_animator.SetBool ("GoLeft", true);
-					}
+			if ((_player.GetAxis ("Horizontal") * (int)_direction) < 0) {
+				if (_direction == Direction.Left) {
+					_direction = Direction.Right;
+					_animator.SetBool("GoRight", true);
+				}
+				else {
+					_direction = Direction.Left;
+					_animator.SetBool ("GoLeft", true);
 				}
 			}
 		}
-		else if (!_isGrounded) {
-			_rgbd.velocity += Vector3.right * _player.GetAxis ("Horizontal") * AirControl * Time.deltaTime;
-		}
 
 		//JUMP
-		if ((_player.GetButtonDown ("Jump")) || ((_jumpBuffer >= 0) && _isGrounded)) {
+		if ((_player.GetButtonDown ("Jump")) || ((_jumpBuffer > 0) && _isGrounded)) {
 			if (_canJump) {
 				_jumpBuffer = 0;
 				_rgbd.velocity = new Vector3 (_rgbd.velocity.x, GroundedJumpMinForce, 0);
@@ -106,7 +110,7 @@ public class Control : MonoBehaviour {
 			}
 			else {
 				if (_canAirJump > 0) {
-					_rgbd.velocity = new Vector3 (_rgbd.velocity.x, AirJumpForce, 0);
+					_rgbd.velocity = new Vector3 (_player.GetAxis ("Horizontal") * GroundSpeed, AirJumpForce, 0);
 					_canAirJump--;
 					_animator.SetTrigger ("Jumping");
 				}
@@ -115,7 +119,7 @@ public class Control : MonoBehaviour {
 				}
 			}
 		}
-		else if (_jumpBuffer >= 0) {
+		else if (_jumpBuffer > 0) {
 			_jumpBuffer -= Time.deltaTime;
 		}
 		else if ((_player.GetButton("Jump")) && (_jumpTime > 0)) {

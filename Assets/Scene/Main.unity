@@ -321,7 +321,7 @@ MonoBehaviour:
     m_Bits: 2048
   GroundSpeed: 7
   Gravity: 9.81
-  AirControl: 6
+  AirControl: 7
   GroundedJumpMinForce: 10
   GroundedJumpAddedForce: 6
   GroundedJumpHoldTime: 1
