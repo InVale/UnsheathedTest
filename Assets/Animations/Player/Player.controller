@@ -39,7 +39,7 @@ AnimatorController:
     m_Mask: {fileID: 0}
     m_Motions: []
     m_Behaviours: []
-    m_BlendingMode: 1
+    m_BlendingMode: 0
     m_SyncedLayerIndex: -1
     m_DefaultWeight: 0
     m_IKPass: 0
@@ -53,7 +53,7 @@ AnimatorController:
     m_Behaviours: []
     m_BlendingMode: 1
     m_SyncedLayerIndex: -1
-    m_DefaultWeight: 0
+    m_DefaultWeight: 0.5
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
@@ -63,7 +63,7 @@ AnimatorController:
     m_Mask: {fileID: 0}
     m_Motions: []
     m_Behaviours: []
-    m_BlendingMode: 1
+    m_BlendingMode: 0
     m_SyncedLayerIndex: -1
     m_DefaultWeight: 0
     m_IKPass: 0
@@ -80,6 +80,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c06b106595e524c47b6b373e70bb1a9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114493421685753220
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0328b97c2263a6b4aaf8b19f51afb69b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  JumpFX: {fileID: 1812242533519372, guid: 48d6646dc14e7c24c96ad406cd0559d0, type: 2}
 --- !u!114 &114547819999176504
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -624,7 +636,8 @@ AnimatorState:
   - {fileID: 1101283008835560524}
   - {fileID: 1101751145435304432}
   - {fileID: 1101339082755880298}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 114493421685753220}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
