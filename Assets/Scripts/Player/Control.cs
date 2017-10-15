@@ -41,6 +41,7 @@ public class Control : MonoBehaviour {
 	//SmallStuff
 	float _jumpBuffer = 0;
 	float _jumpTime = 0;
+	float _basicAttackBuffer;
 
 	// Use this for initialization
 	void Start () {
@@ -131,6 +132,11 @@ public class Control : MonoBehaviour {
 				_rgbd.velocity += Vector3.up * GroundedJumpAddedForce * Time.deltaTime;
 				_jumpTime -= Time.deltaTime;
 			}
+		}
+
+		//ATTACK
+		if (_player.GetButtonDown ("BasicAttack")) {
+			_animator.SetTrigger("BasicAttack");
 		}
 	}
 }
