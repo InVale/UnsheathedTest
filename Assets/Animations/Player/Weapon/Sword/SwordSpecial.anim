@@ -35,7 +35,7 @@ AnimationClip:
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - serializedVersion: 2
-        time: 0.75
+        time: 0.6333333
         value: {x: 0, y: -360, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
@@ -78,7 +78,7 @@ AnimationClip:
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - serializedVersion: 2
-        time: 0.75
+        time: 0.6333333
         value: {x: 0, y: 0, z: -55.44}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
@@ -121,7 +121,7 @@ AnimationClip:
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - serializedVersion: 2
-        time: 0.75
+        time: 0.6333333
         value: {x: 0, y: 0, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
@@ -159,7 +159,7 @@ AnimationClip:
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - serializedVersion: 2
-        time: 0.75
+        time: 0.6333333
         value: {x: 0, y: 0, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
@@ -208,7 +208,7 @@ AnimationClip:
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - serializedVersion: 2
-        time: 0.75
+        time: 0.6333333
         value: {x: 0, y: 0, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
@@ -268,7 +268,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.75
+    m_StopTime: 0.6333333
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -306,7 +306,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.75
+        time: 0.6333333
         value: 0
         inSlope: 0
         outSlope: 0
@@ -340,7 +340,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.75
+        time: 0.6333333
         value: -360
         inSlope: 0
         outSlope: 0
@@ -374,7 +374,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.75
+        time: 0.6333333
         value: 0
         inSlope: 0
         outSlope: 0
@@ -414,7 +414,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.75
+        time: 0.6333333
         value: 0
         inSlope: 0
         outSlope: 0
@@ -454,7 +454,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.75
+        time: 0.6333333
         value: 0
         inSlope: 0
         outSlope: 0
@@ -494,7 +494,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.75
+        time: 0.6333333
         value: 0
         inSlope: 0
         outSlope: 0
@@ -540,7 +540,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.75
+        time: 0.6333333
         value: 0
         inSlope: 0
         outSlope: 0
@@ -586,7 +586,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.75
+        time: 0.6333333
         value: 0
         inSlope: 0
         outSlope: 0
@@ -632,7 +632,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.75
+        time: 0.6333333
         value: -55.44
         inSlope: 0
         outSlope: 0
@@ -684,7 +684,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.75
+        time: 0.6333333
         value: 0
         inSlope: 0
         outSlope: 0
@@ -736,7 +736,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.75
+        time: 0.6333333
         value: 0
         inSlope: 0
         outSlope: 0
@@ -788,7 +788,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.75
+        time: 0.6333333
         value: 0
         inSlope: 0
         outSlope: 0
@@ -834,7 +834,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.75
+        time: 0.6333333
         value: 0
         inSlope: 0
         outSlope: 0
@@ -880,7 +880,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.75
+        time: 0.6333333
         value: 0
         inSlope: 0
         outSlope: 0
@@ -926,7 +926,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.75
+        time: 0.6333333
         value: 0
         inSlope: 0
         outSlope: 0
@@ -946,7 +946,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Model
+    path: Model/Arm
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -956,7 +956,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Model
+    path: Model/Arm
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -966,7 +966,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Model
+    path: Model/Arm
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -976,7 +976,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Model/Arm
+    path: Model
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -986,7 +986,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Model/Arm
+    path: Model
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -996,7 +996,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Model/Arm
+    path: Model
     classID: 4
     script: {fileID: 0}
   - curve:

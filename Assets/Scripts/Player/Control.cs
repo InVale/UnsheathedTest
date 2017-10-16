@@ -4,11 +4,6 @@ using UnityEngine;
 using Rewired;
 
 public class Control : MonoBehaviour {
-
-	public enum Direction {
-		Left = -1,
-		Right = 1
-	}
 			
 	//MainStuff
 	Player _player;
@@ -20,7 +15,6 @@ public class Control : MonoBehaviour {
 	public LayerMask Ground;
 
 	//State
-	Direction _direction = Direction.Right;
 	bool _isGrounded = true;
 	bool _canJump = true;
 	int _canAirJump = 0;
@@ -45,7 +39,7 @@ public class Control : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		_player = ReInput.players.GetPlayer ("SYSTEM");
+		_player = ReInput.players.GetPlayer (0);
 		_animator = GetComponent<Animator> ();
 		_rgbd = GetComponent<Rigidbody> ();
 
@@ -86,21 +80,21 @@ public class Control : MonoBehaviour {
 		}
 
 		//TURN AROUND
-		if ((_player.GetAxis ("Horizontal") <= -0.2f) || (_player.GetAxis ("Horizontal") >= 0.2f)) {
-
-			_animator.SetBool("GoRight", false);
-			_animator.SetBool ("GoLeft", false);
-
-			if (!_animator.GetBool("Attacking") && ((_player.GetAxis ("Horizontal") * (int)_direction) < 0)) {
-				if (_direction == Direction.Left) {
-					_direction = Direction.Right;
-					_animator.SetBool("GoRight", true);
-				}
-				else {
-					_direction = Direction.Left;
-					_animator.SetBool ("GoLeft", true);
+		if (!_animator.GetBool("Attacking")) {
+			if ((_player.GetAxis ("Horizontal") <= -0.2f) || (_player.GetAxis ("Horizontal") >= 0.2f)) {
+				if (_player.GetAxis ("Horizontal") * transform.right.x < 0) {
+					if (transform.right.x > 0) {
+						_animator.SetBool("GoLeft", true);
+					}
+					else {
+						_animator.SetBool ("GoRight", true);
+					}
 				}
 			}
+		}
+		else {
+			_animator.SetBool("GoRight", false);
+			_animator.SetBool ("GoLeft", false);
 		}
 
 		//JUMP
