@@ -138,5 +138,8 @@ public class Control : MonoBehaviour {
 		if (_player.GetButtonDown ("BasicAttack")) {
 			_animator.SetTrigger("BasicAttack");
 		}
+		else if (_player.GetButtonDown ("SpecialAttack")) {
+			_animator.SetTrigger ("SpecialAttack");
+		}
 	}
 }
