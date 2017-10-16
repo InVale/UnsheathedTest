@@ -88,7 +88,10 @@ public class Control : MonoBehaviour {
 		//TURN AROUND
 		if ((_player.GetAxis ("Horizontal") <= -0.2f) || (_player.GetAxis ("Horizontal") >= 0.2f)) {
 
-			if ((_player.GetAxis ("Horizontal") * (int)_direction) < 0) {
+			_animator.SetBool("GoRight", false);
+			_animator.SetBool ("GoLeft", false);
+
+			if (!_animator.GetBool("Attacking") && ((_player.GetAxis ("Horizontal") * (int)_direction) < 0)) {
 				if (_direction == Direction.Left) {
 					_direction = Direction.Right;
 					_animator.SetBool("GoRight", true);
@@ -101,7 +104,7 @@ public class Control : MonoBehaviour {
 		}
 
 		//JUMP
-		if ((_player.GetButtonDown ("Jump")) || ((_jumpBuffer > 0) && _isGrounded)) {
+		if (((_player.GetButtonDown ("Jump")) || ((_jumpBuffer > 0) && _isGrounded)) && !_animator.GetBool ("Attacking")) {
 			if (_canJump) {
 				_jumpBuffer = 0;
 				_rgbd.velocity = new Vector3 (_rgbd.velocity.x, GroundedJumpMinForce, 0);
@@ -109,7 +112,7 @@ public class Control : MonoBehaviour {
 				_jumpTime = GroundedJumpHoldTime;
 				_animator.SetTrigger("Jumping");
 			}
-			else {
+			else if (!_canJump) {
 				if (_canAirJump > 0) {
 					_rgbd.velocity = new Vector3 (_player.GetAxis ("Horizontal") * GroundSpeed, AirJumpForce, 0);
 					_canAirJump--;
@@ -136,9 +139,11 @@ public class Control : MonoBehaviour {
 
 		//ATTACK
 		if (_player.GetButtonDown ("BasicAttack")) {
+			_animator.SetBool ("Attacking", true);
 			_animator.SetTrigger("BasicAttack");
 		}
 		else if (_player.GetButtonDown ("SpecialAttack")) {
+			_animator.SetBool ("Attacking", true);
 			_animator.SetTrigger ("SpecialAttack");
 		}
 	}
