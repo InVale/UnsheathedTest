@@ -8,19 +8,26 @@ public class Control : MonoBehaviour {
 	//MainStuff
 	Player _player;
 	Animator _animator;
-	Rigidbody _rgbd;
+	[HideInInspector]
+	public Rigidbody _rgbd;
 	public Transform GroundCheck;
 
 	//Layer
 	public LayerMask Ground;
 
 	//State
-	bool _isGrounded = true;
+	[HideInInspector]
+	public bool _isGrounded = true;
 	bool _canJump = true;
 	int _canAirJump = 0;
+	int _canDash;
+	[HideInInspector]
+	public bool _isDashing;
+	float _dashDirection = 1;
 
 	//WeirdStuff
-	//[HideInInspector]
+	[HideInInspector]
+	public float _bonusVelocity = 0;
 
 	//Tweaking
 	public float GroundSpeed = 5;
@@ -31,11 +38,15 @@ public class Control : MonoBehaviour {
 	public float GroundedJumpHoldTime = 1;
 	public int AirJumpNumber = 1;
 	public float AirJumpForce = 8;
+	public float DashSpeed = 14;
+	public int DashNumber = 1;
+	public float DashCooldown = 0.5f;
 
 	//SmallStuff
 	float _jumpBuffer = 0;
 	float _jumpTime = 0;
-	float _basicAttackBuffer;
+	float _basicAttackBuffer = 0;
+	float _DashBuffer = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -44,6 +55,7 @@ public class Control : MonoBehaviour {
 		_rgbd = GetComponent<Rigidbody> ();
 
 		_canAirJump = AirJumpNumber;
+		_canDash = DashNumber;
 	}
 
 	// Update is called once per frame
@@ -57,6 +69,7 @@ public class Control : MonoBehaviour {
 			if (_isGrounded) {
 				_canJump = true;
 				_canAirJump = AirJumpNumber;
+				_canDash = DashNumber;
 				_animator.SetTrigger ("Landing");
 				_rgbd.velocity = new Vector3 (_rgbd.velocity.x, 0, 0);
 			}
@@ -69,14 +82,23 @@ public class Control : MonoBehaviour {
 		}
 
 		//MOVEMENT
-		if (_isGrounded) {
-			_rgbd.velocity = new Vector3(_player.GetAxis ("Horizontal") * GroundSpeed, _rgbd.velocity.y, 0);
-		}
-		else if (!_isGrounded) {
-			float newAirSpeed = _rgbd.velocity.x + _player.GetAxis ("Horizontal") * AirControl * Time.deltaTime;
-			if ((newAirSpeed > -GroundSpeed) && (newAirSpeed < GroundSpeed)) {
-				_rgbd.velocity = new Vector3(newAirSpeed, _rgbd.velocity.y, 0);
+		if (!_isDashing) {
+			if (_isGrounded) {
+				_rgbd.velocity = new Vector3(_player.GetAxis ("Horizontal") * GroundSpeed + _bonusVelocity, _rgbd.velocity.y, 0);
 			}
+			else if (!_isGrounded) {
+				float newAirSpeed = _rgbd.velocity.x + _player.GetAxis ("Horizontal") * AirControl * Time.deltaTime;
+				if ((newAirSpeed > -GroundSpeed) && (newAirSpeed < GroundSpeed)) {
+					_rgbd.velocity = new Vector3(newAirSpeed, _rgbd.velocity.y, 0);
+				}
+				else {
+					int dir = (_rgbd.velocity.x > 0) ? 1 : -1;
+					_rgbd.velocity = new Vector3(dir * GroundSpeed, _rgbd.velocity.y, 0);
+				}
+			}
+		}
+		else {
+			_rgbd.velocity = Vector3.right * DashSpeed * _dashDirection;
 		}
 
 		//TURN AROUND
@@ -132,13 +154,39 @@ public class Control : MonoBehaviour {
 		}
 
 		//ATTACK
-		if (_player.GetButtonDown ("BasicAttack")) {
-			_animator.SetBool ("Attacking", true);
-			_animator.SetTrigger("BasicAttack");
+		if (!_isDashing) {
+			if (_player.GetButtonDown ("BasicAttack")) {
+				_animator.SetBool ("Attacking", true);
+				_animator.SetTrigger("BasicAttack");
+			}
+			else if (_player.GetButtonDown ("SpecialAttack")) {
+				_animator.SetBool ("Attacking", true);
+				_animator.SetTrigger ("SpecialAttack");
+			}
 		}
-		else if (_player.GetButtonDown ("SpecialAttack")) {
-			_animator.SetBool ("Attacking", true);
-			_animator.SetTrigger ("SpecialAttack");
+
+		//DASH
+		if (_canDash > 0) {
+			if (_player.GetButtonDown("Dash_Left")) {
+				_canDash --;
+				_DashBuffer = DashCooldown;
+				_dashDirection = -1;
+				_animator.SetTrigger ("Dash");
+			}
+			else if (_player.GetButtonDown("Dash_Right")) {
+				_canDash --;
+				_DashBuffer = DashCooldown;
+				_dashDirection = 1;
+				_animator.SetTrigger ("Dash");
+			}
+		}
+		else {
+			if (_DashBuffer > 0) {
+				_DashBuffer -= Time.deltaTime;
+			}
+			else if (_isGrounded) {
+				_canDash = DashNumber;
+			}
 		}
 	}
 }
