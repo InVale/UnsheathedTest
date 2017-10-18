@@ -2,14 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dash : StateMachineBehaviour {
+public class DashState : StateMachineBehaviour {
 
-	Control _control;
+	//Tweak
+	public float DashSpeed = 14;
+	public float DashCooldown = 0.25f;
 
-	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
+	//Mandatory
+	Rigidbody _rgbd;
+
+	// OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-		_control = animator.gameObject.GetComponent<Control> ();
-		_control._isDashing = true;
+		_rgbd = animator.gameObject.GetComponent<Rigidbody> ();
+
+		animator.SetBool ("DashInput", false);
+
+		animator.SetBool ("CanMove", false);
+		animator.SetBool ("CanTurn", false);
+		if (animator.GetBool ("Cancel")) {
+			animator.SetBool ("Cancel", false);
+		}
+		else {
+			animator.SetBool ("Cancel", true);
+			animator.SetFloat ("DashCooldown", DashCooldown);
+			if (!animator.GetBool("Grounded")) {
+				animator.SetInteger ("AirDashNumber", animator.GetInteger ("AirDashNumber") - 1);
+				animator.SetInteger ("AirJumpNumber", animator.GetInteger ("AirJumpNumber") + 1);
+			}
+		}
+
+		int dir = (animator.transform.right.x * animator.GetFloat("Joystick X") >= 0) ? 1 : -1;
+		_rgbd.velocity = animator.transform.right * DashSpeed * dir;
 	}
 
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -19,7 +42,9 @@ public class Dash : StateMachineBehaviour {
 
 	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-		_control._isDashing = false;
+
+		animator.SetBool ("CanMove", true);
+		animator.SetBool ("CanTurn", true);
 	}
 
 	// OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here

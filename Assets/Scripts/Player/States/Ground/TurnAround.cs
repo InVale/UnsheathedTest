@@ -10,20 +10,20 @@ public class TurnAround : StateMachineBehaviour {
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
 		_main = animator.gameObject;
 
-		animator.SetBool ("GoLeft", false);
-		animator.SetBool ("GoRight", false);
-
 		_main.transform.localRotation = Quaternion.Euler (_main.transform.localRotation.eulerAngles.x, 
 			_main.transform.localRotation.eulerAngles.y + 180, _main.transform.localRotation.eulerAngles.z);
+		animator.SetBool ("FacingRight", !animator.GetBool ("FacingRight"));
 	}
 
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
 	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-		if (animator.GetBool("GoLeft")) {
-			animator.Play ("Left Turn Around", 0, (1 - stateInfo.normalizedTime));
-		}
-		else if (animator.GetBool("GoRight")) {
-			animator.Play ("Right Turn Around", 0, (1 - stateInfo.normalizedTime));
+		if (animator.GetBool("CanTurn")) {
+			if ((!animator.GetBool("FacingRight")) && (animator.GetFloat("Joystick X") > 0.2)) {
+				animator.Play ("Right Turn Around", 0, (1 - stateInfo.normalizedTime));
+			}
+			else if ((animator.GetBool("FacingRight")) && (animator.GetFloat("Joystick X") < -0.2)) {
+				animator.Play ("Left Turn Around", 0, (1 - stateInfo.normalizedTime));
+			}
 		}
 	}
 

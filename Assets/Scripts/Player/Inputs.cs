@@ -5,35 +5,70 @@ using Rewired;
 
 public enum BufferInput {
 	None,
-	Jump,
-	Dash,
-	BasicAttack,
-	SpecialAttack
+	JumpInput,
+	DashInput,
+	BasicAttackInput,
+	SpecialAttackInput
 }
 
 public class Inputs : MonoBehaviour {
 
-	public float BufferWindow;
+	//Tweak
+	public float BufferWindow = 0.05f;
 
+	//Mandatory
 	Animator _animator;
 	Player _player;
 
+	//Stuff
 	BufferInput _buffer = BufferInput.None;
 	float _bufferTime;
 
-	// Use this for initialization
 	void Start () {
 		_animator = GetComponent<Animator> ();
 		_player = ReInput.players.GetPlayer (0);
-		//Debug.Log (_buffer.ToString ());
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
+		BufferTick ();
+		InputRead ();
+		StickRead ();
+	}
 
-		if (_player.GetButtonDown("Jump")) {
-			
+	void BufferTick() {
+		if (_bufferTime > 0) {
+			_bufferTime -= Time.deltaTime;
+			if (_bufferTime <= 0){
+				_animator.SetBool (_buffer.ToString (), false);
+				_buffer = BufferInput.None;
+			}
 		}
+	}
 
+	void InputRead() {
+		if (_player.GetButtonDown("Jump")) {
+			_buffer = BufferInput.JumpInput;
+			_bufferTime = BufferWindow;
+			_animator.SetBool (_buffer.ToString (), true);
+		}
+		else if (_player.GetButtonDown("Dash")) {
+			_buffer = BufferInput.DashInput;
+			_bufferTime = BufferWindow;
+			_animator.SetBool (_buffer.ToString (), true);
+		}
+		else if (_player.GetButtonDown("BasicAttack")) {
+			_buffer = BufferInput.BasicAttackInput;
+			_bufferTime = BufferWindow;
+			_animator.SetBool (_buffer.ToString (), true);
+		}
+		else if (_player.GetButtonDown("SpecialAttack")) {
+			_buffer = BufferInput.SpecialAttackInput;
+			_bufferTime = BufferWindow;
+			_animator.SetBool (_buffer.ToString (), true);
+		}
+	}
+
+	void StickRead() {
+		_animator.SetFloat("Joystick X", _player.GetAxis("Horizontal"));
 	}
 }

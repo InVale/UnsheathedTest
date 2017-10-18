@@ -4,29 +4,29 @@ using UnityEngine;
 
 public class SpinAttack : StateMachineBehaviour {
 
-	Control	_control;
+	//Tweak
+	public GameObject JumpFX;
+	public float SpinSpeed = 10;
+	public float Jump = 12;
 
-	public float AddedSpeed = 5;
-	public float Jump = 3;
-
-	bool _wasSpeedAdded = false;
-	float _bufferSpeed;
+	//Mandatory
+	Rigidbody _rgbd;
 
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-		_control = animator.gameObject.GetComponent<Control> ();
+		_rgbd = animator.gameObject.GetComponent<Rigidbody> ();
 
-		if (_control._isGrounded) {
-			_wasSpeedAdded = true;
-			_control._bonusVelocity = AddedSpeed * animator.transform.right.x;
-			_bufferSpeed = _control.GroundSpeed;
-			_control.GroundSpeed = 0;
+		animator.SetBool ("CanTurn", false);
+
+		if (animator.GetBool("Grounded")) {
+			animator.SetBool ("CanMove", false);
+			int dir = (animator.transform.right.x * animator.GetFloat("Joystick X") >= 0) ? 1 : -1;
+			_rgbd.velocity = animator.transform.right * SpinSpeed * dir;
 		}
 		else {
-			if (true) {
-				_control._rgbd.velocity = new Vector3 (_control._rgbd.velocity.x, Jump, 0);
-				animator.SetTrigger ("Jumping");
-			}
+			Instantiate (JumpFX, animator.transform.position + Vector3.down * 0.5f, Quaternion.identity);
+			_rgbd.velocity = new Vector3 (_rgbd.velocity.x, Jump, 0);
+			animator.SetBool ("CanSpecialAttack", false);
 		}
 	}
 
@@ -36,13 +36,9 @@ public class SpinAttack : StateMachineBehaviour {
 	//}
 
 	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-		if (_wasSpeedAdded) {
-			_wasSpeedAdded = false;
-			_control._bonusVelocity = 0;
-			_control.GroundSpeed = _bufferSpeed;
-		}
-	}
+	//override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
+	//	
+	//}
 
 	// OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here
 	//override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
